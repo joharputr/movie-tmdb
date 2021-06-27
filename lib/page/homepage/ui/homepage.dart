@@ -237,7 +237,7 @@ class _HomepageState extends State<Homepage> {
                               height: 5,
                             ),
                             Text(
-                              "Avenger your Head",
+                              "Avenger your Hero",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
                             ),
