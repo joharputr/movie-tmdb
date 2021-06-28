@@ -13,10 +13,23 @@ class TopMovieBloc extends Bloc<BlocEvent, BlocState> {
     if (event is FetchTopMovie) {
       yield BlocLoading(); //state
       try {
-        dynamic getRepoData = await api.getTopMovie();
+        dynamic getRepoData = await api.getTopMovie(page: event.page);
         print("getRepoo = $getRepoData");
         if (getRepoData is UpCommingMovie) {
           print("yesss");
+          yield BlocLoaded(getRepoData);
+        } else
+          yield BlocError(getRepoData);
+        print("getRepoData = ${getRepoData}");
+      } catch (_) {
+        yield BlocError("error Bro");
+      }
+    } else if (event is FetchTopMovieLoadMore) {
+      yield BlocLoadingMore(); //state
+      try {
+        dynamic getRepoData = await api.getTopMovie(page: event.page);
+        print("getRepoo = $getRepoData");
+        if (getRepoData is UpCommingMovie) {
           yield BlocLoaded(getRepoData);
         } else
           yield BlocError(getRepoData);

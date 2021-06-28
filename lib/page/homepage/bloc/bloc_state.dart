@@ -12,6 +12,9 @@ class BlocError extends BlocState {
 
 class BlocLoading extends BlocState {}
 
+class BlocLoadingMore extends BlocState {}
+
+
 class BlocLoaded extends BlocState {
   final dynamic data;
 
