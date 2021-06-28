@@ -7,28 +7,28 @@ import 'package:movie/page/homepage/model/upcomming_movie_model.dart';
 class TopMovieBloc extends Bloc<BlocEvent, BlocState> {
   TopMovieBloc() : super(BlocLoading());
 
+  int page = 1;
+
   @override
   Stream<BlocState> mapEventToState(BlocEvent event) async* {
     Api api = Api();
     if (event is FetchTopMovie) {
       yield BlocLoading(); //state
       try {
-        dynamic getRepoData = await api.getTopMovie(page: event.page);
+        dynamic getRepoData = await api.getTopMovie(page: page);
         print("getRepoo = $getRepoData");
         if (getRepoData is UpCommingMovie) {
-          print("yesss");
           yield BlocLoaded(getRepoData);
         } else
           yield BlocError(getRepoData);
-        print("getRepoData = ${getRepoData}");
       } catch (_) {
         yield BlocError("error Bro");
       }
     } else if (event is FetchTopMovieLoadMore) {
       yield BlocLoadingMore(); //state
       try {
-        dynamic getRepoData = await api.getTopMovie(page: event.page);
-        print("getRepoo = $getRepoData");
+        page++;
+        dynamic getRepoData = await api.getTopMovie(page: page);
         if (getRepoData is UpCommingMovie) {
           yield BlocLoaded(getRepoData);
         } else

@@ -16,11 +16,10 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   List<Result>? result = [];
-  int page = 1;
 
   @override
   void initState() {
-    context.read<TopMovieBloc>().add(FetchTopMovie(page: page));
+    context.read<TopMovieBloc>().add(FetchTopMovie());
     super.initState();
   }
 
@@ -112,7 +111,6 @@ class _HomepageState extends State<Homepage> {
                   return Center(child: CircularProgressIndicator());
                 } else if (state is BlocLoaded || state is BlocLoadingMore) {
                   if (state is BlocLoaded) {
-                    print("loadeeeed");
                     UpCommingMovie event = state.data as UpCommingMovie;
                     result!.addAll(event.results!);
 
@@ -179,12 +177,9 @@ class _HomepageState extends State<Homepage> {
                           ),
                           MaterialButton(
                             onPressed: () {
-                              setState(() {
-                                page++;
-                              });
                               context
                                   .read<TopMovieBloc>()
-                                  .add(FetchTopMovieLoadMore(page: page));
+                                  .add(FetchTopMovieLoadMore());
                             },
                             child: state is BlocLoadingMore
                                 ? CircularProgressIndicator()
