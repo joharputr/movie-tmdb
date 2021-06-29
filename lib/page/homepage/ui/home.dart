@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:movie/page/homepage/bloc/bloc_event.dart';
 import 'package:movie/page/homepage/bloc/bloc_state.dart';
 import 'package:movie/page/homepage/bloc/homepage_bloc.dart';
@@ -156,11 +157,12 @@ class _HomeState extends State<Home> {
                                           height: 7,
                                         ),
                                         RatingBar.builder(
+                                          ignoreGestures: true,
                                           itemSize: 20,
-                                          initialRating: 3,
+                                          initialRating: e.voteAverage! / 2,
                                           minRating: 1,
                                           direction: Axis.horizontal,
-                                          allowHalfRating: true,
+                                          allowHalfRating: false,
                                           itemCount: 5,
                                           itemPadding: EdgeInsets.symmetric(
                                               horizontal: 2.0),
@@ -261,19 +263,6 @@ class _HomeState extends State<Home> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Container(
-                                          width: 100,
-                                          child: Text(
-                                            "Drama,",
-                                            style: TextStyle(
-                                                color: Color(0xff696D74),
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Container(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width /
@@ -291,7 +280,9 @@ class _HomeState extends State<Home> {
                                         ),
                                         RatingBar.builder(
                                           itemSize: 20,
-                                          initialRating: 3.1,
+                                          initialRating: resultTvSeries![index]
+                                                  .voteAverage! /
+                                              2,
                                           minRating: 1,
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
@@ -305,7 +296,23 @@ class _HomeState extends State<Home> {
                                           onRatingUpdate: (rating) {
                                             print(rating);
                                           },
-                                        )
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1.6,
+                                          child: Text(
+                                            "${Jiffy(resultTvSeries?[index].firstAirDate).yMMMMd},",
+                                            style: TextStyle(
+                                                color: Color(0xff696D74),
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
                                       ],
                                     )
                                   ],
