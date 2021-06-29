@@ -10,12 +10,22 @@ class BlocError extends BlocState {
   BlocError(this.error);
 }
 
-class BlocLoading extends BlocState {}
+class BlocLoadingTopMovie extends BlocState {}
 
-class BlocLoadingMore extends BlocState {}
+class BlocLoadingMoreTopMovie extends BlocState {}
 
-class BlocLoaded extends BlocState {
+class BlocLoadedTopMovie extends BlocState {
   final dynamic data;
 
-  BlocLoaded(this.data);
+  BlocLoadedTopMovie(this.data);
+}
+
+class BlocLoadingTvSeries extends BlocState {}
+
+class BlocLoadingMoreTvSeries extends BlocState {}
+
+class BlocLoadedTvSeries extends BlocState {
+  final dynamic data;
+
+  BlocLoadedTvSeries(this.data);
 }

@@ -1,15 +1,17 @@
 // To parse this JSON data, do
 //
-//     final upCommingMovie = upCommingMovieFromJson(jsonString);
+//     final popularTvSeriesModel = popularTvSeriesModelFromJson(jsonString);
 
 import 'dart:convert';
 
-UpCommingMovie upCommingMovieFromJson(str) => UpCommingMovie.fromJson(str);
+PopularTvSeriesModel popularTvSeriesModelFromJson( str) =>
+    PopularTvSeriesModel.fromJson(str);
 
-String upCommingMovieToJson(UpCommingMovie data) => json.encode(data.toJson());
+String popularTvSeriesModelToJson(PopularTvSeriesModel data) =>
+    json.encode(data.toJson());
 
-class UpCommingMovie {
-  UpCommingMovie({
+class PopularTvSeriesModel {
+  PopularTvSeriesModel({
     this.page,
     this.results,
     this.totalPages,
@@ -17,14 +19,15 @@ class UpCommingMovie {
   });
 
   int? page;
-  List<ResultUpcomingMovie>? results;
+  List<TopTvseriesResult>? results;
   int? totalPages;
   int? totalResults;
 
-  factory UpCommingMovie.fromJson(Map<String, dynamic> json) => UpCommingMovie(
+  factory PopularTvSeriesModel.fromJson(Map<String, dynamic> json) =>
+      PopularTvSeriesModel(
         page: json["page"],
         results:
-            List<ResultUpcomingMovie>.from(json["results"].map((x) => ResultUpcomingMovie.fromJson(x))),
+            List<TopTvseriesResult>.from(json["results"].map((x) => TopTvseriesResult.fromJson(x))),
         totalPages: json["total_pages"],
         totalResults: json["total_results"],
       );
@@ -37,70 +40,66 @@ class UpCommingMovie {
       };
 }
 
-class ResultUpcomingMovie {
-  ResultUpcomingMovie({
-    this.adult,
+class TopTvseriesResult {
+  TopTvseriesResult({
     this.backdropPath,
+    this.firstAirDate,
     this.genreIds,
     this.id,
+    this.name,
+    this.originCountry,
     this.originalLanguage,
-    this.originalTitle,
+    this.originalName,
     this.overview,
     this.popularity,
     this.posterPath,
-    this.releaseDate,
-    this.title,
-    this.video,
     this.voteAverage,
     this.voteCount,
   });
 
-  bool? adult;
   String? backdropPath;
+  DateTime? firstAirDate;
   List<int>? genreIds;
   int? id;
+  String? name;
+  List<String>? originCountry;
   String? originalLanguage;
-  String? originalTitle;
+  String? originalName;
   String? overview;
   double? popularity;
   String? posterPath;
-  DateTime? releaseDate;
-  String? title;
-  bool? video;
   double? voteAverage;
   int? voteCount;
 
-  factory ResultUpcomingMovie.fromJson(Map<String, dynamic> json) => ResultUpcomingMovie(
-        adult: json["adult"],
+  factory TopTvseriesResult.fromJson(Map<String, dynamic> json) => TopTvseriesResult(
         backdropPath: json["backdrop_path"],
+        firstAirDate: DateTime.parse(json["first_air_date"]),
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
+        name: json["name"],
+        originCountry: List<String>.from(json["origin_country"].map((x) => x)),
         originalLanguage: json["original_language"],
-        originalTitle: json["original_title"],
+        originalName: json["original_name"],
         overview: json["overview"],
         popularity: json["popularity"].toDouble(),
         posterPath: json["poster_path"],
-        releaseDate: DateTime.parse(json["release_date"]),
-        title: json["title"],
-        video: json["video"],
         voteAverage: json["vote_average"].toDouble(),
         voteCount: json["vote_count"],
       );
 
   Map<String, dynamic> toJson() => {
-        "adult": adult,
         "backdrop_path": backdropPath,
+        "first_air_date":
+            "${firstAirDate?.year.toString().padLeft(4, '0')}-${firstAirDate?.month.toString().padLeft(2, '0')}-${firstAirDate?.day.toString().padLeft(2, '0')}",
         "genre_ids": List<dynamic>.from(genreIds!.map((x) => x)),
         "id": id,
+        "name": name,
+        "origin_country": List<dynamic>.from(originCountry!.map((x) => x)),
         "original_language": originalLanguage,
-        "original_title": originalTitle,
+        "original_name": originalName,
         "overview": overview,
         "popularity": popularity,
         "poster_path": posterPath,
-        "release_date":
-            "${releaseDate?.year.toString().padLeft(4, '0')}-${releaseDate?.month.toString().padLeft(2, '0')}-${releaseDate?.day.toString().padLeft(2, '0')}",
-        "title": title,
-        "video": video,
         "vote_average": voteAverage,
         "vote_count": voteCount,
       };
