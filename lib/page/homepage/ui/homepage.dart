@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie/page/homepage/bloc/bloc_event.dart';
 import 'package:movie/page/homepage/bloc/bloc_state.dart';
 import 'package:movie/page/homepage/bloc/homepage_bloc.dart';
 import 'package:movie/page/homepage/model/upcomming_movie_model.dart';
 import 'package:movie/page/homepage/ui/home.dart';
+import 'package:search/search_movie.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -35,47 +37,66 @@ class _HomepageState extends State<Homepage> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
-    Text(
-      'Index 1: Business',
-    ),
+    SearchMovie(),
     Text(
       'Index 2: School',
-    ),
-    Text(
-      'Index 3: Settings',
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               backgroundColor: Colors.black87,
-              showSelectedLabels: true,
+              showSelectedLabels: false,
               showUnselectedLabels: false,
               unselectedItemColor: Colors.white,
-              items: const <BottomNavigationBarItem>[
+              selectedItemColor: Colors.blue,
+              items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
+                  icon: SvgPicture.asset(
+                    "assets/svg/icon_home.svg",
+                    color: Colors.white,
+                  ),
+                  activeIcon: SvgPicture.asset(
+                    "assets/svg/icon_home.svg",
+                    color: Colors.blueAccent,
+                    height: 25,
+                    width: 25,
+                  ),
+                  label: '',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.business),
-                  label: 'Business',
+                  icon: SvgPicture.asset(
+                    "assets/svg/icon_search.svg",
+                    color: Colors.white,
+                  ),
+                  activeIcon: SvgPicture.asset(
+                    "assets/svg/icon_search.svg",
+                    color: Colors.blueAccent,
+                    height: 27,
+                    width: 27,
+                  ),
+                  label: '',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.school),
-                  label: 'School',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.settings),
-                  label: 'Settings',
+                  icon: SvgPicture.asset(
+                    "assets/svg/icon_save.svg",
+                    color: Colors.white,
+                  ),
+                  activeIcon: SvgPicture.asset(
+                    "assets/svg/icon_save.svg",
+                    color: Colors.blueAccent,
+                    height: 27,
+                    width: 27,
+                  ),
+                  label: '',
                 ),
               ],
               currentIndex: _selectedIndex,
-              selectedItemColor: Colors.white,
               onTap: _onItemTapped,
             ),
             body: _widgetOptions.elementAt(_selectedIndex)));

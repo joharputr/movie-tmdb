@@ -23,7 +23,12 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TopMovieBloc, BlocState>(
+    return BlocConsumer<TopMovieBloc, BlocState>(
+      listener: (context, state) {
+        if (state is BlocLoadingTopMovie) {
+          print("Top");
+        }
+      },
       builder: (context, state) {
         if (state is BlocLoadingTopMovie) {
           return Center(child: CircularProgressIndicator());
@@ -33,88 +38,93 @@ class _HomeState extends State<Home> {
             resultUpcomingMovie = state.data;
             print("reslutLength = ${resultUpcomingMovie!.length}");
           }
-
           return Container(
             color: Color(0xff1D2027),
             child: ListView(
               controller: _controller,
               shrinkWrap: true,
               physics: AlwaysScrollableScrollPhysics(),
-              padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
+              padding: EdgeInsets.fromLTRB(24, 24, 0, 0),
               children: [
                 SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            height: 50,
-                            width: 50,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(6.0),
-                              child: Image.network(
-                                'https://www.pngfind.com/pngs/m/292-2924858_user-icon-business-man-flat-png-transparent-png.png',
-                                fit: BoxFit.cover,
+                Padding(
+                  padding: const EdgeInsets.only(right: 24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              height: 50,
+                              width: 50,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(6.0),
+                                child: Image.network(
+                                  'https://www.pngfind.com/pngs/m/292-2924858_user-icon-business-man-flat-png-transparent-png.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Good Morning,",
+                                style: TextStyle(
+                                    color: Color(0xff696D74),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
                               ),
-                            )),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Good Morning,",
-                              style: TextStyle(
-                                  color: Color(0xff696D74),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Avenger",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 15),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    Icon(
-                      Icons.notifications,
-                      size: 25,
-                      color: Colors.white,
-                    )
-                  ],
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Avenger",
+                                style:
+                                    TextStyle(color: Colors.white, fontSize: 15),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      Icon(
+                        Icons.notifications,
+                        size: 25,
+                        color: Colors.white,
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 35,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Top Movie",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.white),
-                    ),
-                    Text(
-                      "See more",
-                      style: TextStyle(
-                        color: Color(0xff696D74),
-                        fontSize: 15,
+                Padding(
+                  padding: const EdgeInsets.only(right: 24),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Top Movie",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white),
                       ),
-                    )
-                  ],
+                      Text(
+                        "See more",
+                        style: TextStyle(
+                          color: Color(0xff696D74),
+                          fontSize: 15,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 10,
@@ -208,118 +218,121 @@ class _HomeState extends State<Home> {
                   } else if (state is BlocLoadedTvSeries) {
                     resultTvSeries = state.data;
                     print("reslutLengthTvseries = ${resultTvSeries!.length}");
-                    return Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Tv Series",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.white),
-                            ),
-                            Text(
-                              "See more",
-                              style: TextStyle(
-                                color: Color(0xff696D74),
-                                fontSize: 15,
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 24),
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Tv Series",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.white),
                               ),
-                            )
-                          ],
-                        ),
-                        ListView.builder(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                            shrinkWrap: true,
-                            physics: ClampingScrollPhysics(),
-                            itemCount: resultTvSeries?.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 12, bottom: 12),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                        height: 80,
-                                        width: 76,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(6.0),
-                                          child: Image.network(
-                                            'https://image.tmdb.org/t/p/w500${resultTvSeries?[index].posterPath}',
-                                            fit: BoxFit.cover,
-                                          ),
-                                        )),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              1.6,
-                                          child: Text(
-                                            "${resultTvSeries?[index].name}",
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        RatingBar.builder(
-                                          itemSize: 20,
-                                          initialRating: resultTvSeries![index]
-                                                  .voteAverage! /
-                                              2,
-                                          minRating: 1,
-                                          direction: Axis.horizontal,
-                                          allowHalfRating: true,
-                                          itemCount: 5,
-                                          itemPadding: EdgeInsets.symmetric(
-                                              horizontal: 2.0),
-                                          itemBuilder: (context, _) => Icon(
-                                            Icons.star,
-                                            color: Colors.amber,
-                                          ),
-                                          onRatingUpdate: (rating) {
-                                            print(rating);
-                                          },
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              1.6,
-                                          child: Text(
-                                            "${Jiffy(resultTvSeries?[index].firstAirDate).yMMMMd},",
-                                            style: TextStyle(
-                                                color: Color(0xff696D74),
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                              Text(
+                                "See more",
+                                style: TextStyle(
+                                  color: Color(0xff696D74),
+                                  fontSize: 15,
                                 ),
-                              );
-                            })
-                      ],
+                              )
+                            ],
+                          ),
+                          ListView.builder(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              shrinkWrap: true,
+                              physics: ClampingScrollPhysics(),
+                              itemCount: resultTvSeries?.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 12, bottom: 12),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                          height: 80,
+                                          width: 76,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(6.0),
+                                            child: Image.network(
+                                              'https://image.tmdb.org/t/p/w500${resultTvSeries?[index].posterPath}',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          )),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                1.6,
+                                            child: Text(
+                                              "${resultTvSeries?[index].name}",
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          RatingBar.builder(
+                                            itemSize: 20,
+                                            initialRating: resultTvSeries![index]
+                                                    .voteAverage! /
+                                                2,
+                                            minRating: 1,
+                                            direction: Axis.horizontal,
+                                            allowHalfRating: true,
+                                            itemCount: 5,
+                                            itemPadding: EdgeInsets.symmetric(
+                                                horizontal: 2.0),
+                                            itemBuilder: (context, _) => Icon(
+                                              Icons.star,
+                                              color: Colors.amber,
+                                            ),
+                                            onRatingUpdate: (rating) {
+                                              print(rating);
+                                            },
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                1.6,
+                                            child: Text(
+                                              "${Jiffy(resultTvSeries?[index].firstAirDate).yMMMMd},",
+                                              style: TextStyle(
+                                                  color: Color(0xff696D74),
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              })
+                        ],
+                      ),
                     );
                   }
 
