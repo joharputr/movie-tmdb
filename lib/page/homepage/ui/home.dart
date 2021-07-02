@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:movie/helper/style.dart';
 import 'package:movie/page/homepage/bloc/bloc_event.dart';
 import 'package:movie/page/homepage/bloc/bloc_state.dart';
 import 'package:movie/page/homepage/bloc/homepage_bloc.dart';
@@ -39,7 +40,12 @@ class _HomeState extends State<Home> {
             print("reslutLength = ${resultUpcomingMovie!.length}");
           }
           return Container(
-            color: Color(0xff1D2027),
+            decoration: BoxDecoration(
+                color: Color(0xff1B1E25),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24))),
+            height: double.infinity,
             child: ListView(
               controller: _controller,
               shrinkWrap: true,
@@ -75,18 +81,15 @@ class _HomeState extends State<Home> {
                             children: [
                               Text(
                                 "Good Morning,",
-                                style: TextStyle(
+                                style: CustomStyle().fontStyle.copyWith(
                                     color: Color(0xff696D74),
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(
-                                height: 5,
-                              ),
                               Text(
                                 "Avenger",
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 15),
+                                style: CustomStyle().fontStyle.copyWith(
+                                    color: Colors.white, fontSize: 15),
                               ),
                             ],
                           )
@@ -111,17 +114,17 @@ class _HomeState extends State<Home> {
                     children: [
                       Text(
                         "Top Movie",
-                        style: TextStyle(
+                        style: CustomStyle().fontStyle.copyWith(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
                             color: Colors.white),
                       ),
                       Text(
                         "See more",
-                        style: TextStyle(
-                          color: Color(0xff696D74),
-                          fontSize: 15,
-                        ),
+                        style: CustomStyle().fontStyle.copyWith(
+                              color: Color(0xff696D74),
+                              fontSize: 15,
+                            ),
                       )
                     ],
                   ),
@@ -157,11 +160,20 @@ class _HomeState extends State<Home> {
                                         SizedBox(
                                           height: 15,
                                         ),
-                                        Text(
-                                          "${e.title}",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          child: Text(
+                                            "${e.title}",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: CustomStyle()
+                                                .fontStyle
+                                                .copyWith(
+                                                    color: Colors.white,
+                                                    fontSize: 16),
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 7,
@@ -199,7 +211,7 @@ class _HomeState extends State<Home> {
                               ? CircularProgressIndicator()
                               : Text(
                                   "Load More",
-                                  style: TextStyle(
+                                  style: CustomStyle().fontStyle.copyWith(
                                       color: Colors.white, fontSize: 16),
                                 ),
                         )
@@ -228,17 +240,17 @@ class _HomeState extends State<Home> {
                             children: [
                               Text(
                                 "Tv Series",
-                                style: TextStyle(
+                                style: CustomStyle().fontStyle.copyWith(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                     color: Colors.white),
                               ),
                               Text(
                                 "See more",
-                                style: TextStyle(
-                                  color: Color(0xff696D74),
-                                  fontSize: 15,
-                                ),
+                                style: CustomStyle().fontStyle.copyWith(
+                                      color: Color(0xff696D74),
+                                      fontSize: 15,
+                                    ),
                               )
                             ],
                           ),
@@ -249,10 +261,11 @@ class _HomeState extends State<Home> {
                               itemCount: resultTvSeries?.length,
                               itemBuilder: (context, index) {
                                 return Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 12, bottom: 12),
+                                  padding: const EdgeInsets.only(
+                                      top: 12, bottom: 12),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Container(
                                           height: 80,
@@ -282,9 +295,11 @@ class _HomeState extends State<Home> {
                                             child: Text(
                                               "${resultTvSeries?[index].name}",
                                               overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16),
+                                              style: CustomStyle()
+                                                  .fontStyle
+                                                  .copyWith(
+                                                      color: Colors.white,
+                                                      fontSize: 16),
                                             ),
                                           ),
                                           SizedBox(
@@ -292,9 +307,10 @@ class _HomeState extends State<Home> {
                                           ),
                                           RatingBar.builder(
                                             itemSize: 20,
-                                            initialRating: resultTvSeries![index]
-                                                    .voteAverage! /
-                                                2,
+                                            initialRating:
+                                                resultTvSeries![index]
+                                                        .voteAverage! /
+                                                    2,
                                             minRating: 1,
                                             direction: Axis.horizontal,
                                             allowHalfRating: true,
@@ -319,10 +335,13 @@ class _HomeState extends State<Home> {
                                                 1.6,
                                             child: Text(
                                               "${Jiffy(resultTvSeries?[index].firstAirDate).yMMMMd},",
-                                              style: TextStyle(
-                                                  color: Color(0xff696D74),
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
+                                              style: CustomStyle()
+                                                  .fontStyle
+                                                  .copyWith(
+                                                      color: Color(0xff696D74),
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                             ),
                                           ),
                                         ],

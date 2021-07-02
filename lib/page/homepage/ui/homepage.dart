@@ -48,9 +48,11 @@ class _HomepageState extends State<Homepage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+            backgroundColor: Color(0xff1D2027),
             bottomNavigationBar: BottomNavigationBar(
+              elevation: 0,
               type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.black87,
+              backgroundColor: Color(0xff1D2027),
               showSelectedLabels: false,
               showUnselectedLabels: false,
               unselectedItemColor: Colors.white,
