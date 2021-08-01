@@ -26,8 +26,10 @@ class Api {
       final url =
           "https://api.themoviedb.org/3/tv/popular?api_key=9b3efc88fed3cb0e25a0849788f05166&language=en-US&page=$page";
       final response = await dio.get(url);
+      print("popularMovie = ${response.data}");
       return popularTvSeriesModelFromJson(response.data);
     } on DioError catch (e) {
+      print("error = ${e.toString()}");
       return e.message;
     }
   }

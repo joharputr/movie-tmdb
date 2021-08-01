@@ -50,23 +50,20 @@ class TvBloc extends Bloc<BlocEvent, BlocState> {
   TvBloc() : super(BlocLoadingTvSeries());
   Api api = Api();
   int pageTvSeries = 1;
-  List<TopTvseriesResult>? resultTvSeries = [];
+  List<TopTvResult> resultTvSeries = [];
 
   @override
   Stream<BlocState> mapEventToState(BlocEvent event) async* {
     if (event is FetchPopularTvSeries) {
       yield BlocLoadingTvSeries(); //state
-      try {
+
         dynamic getRepoData = await api.getPopularTvSeries(page: pageTvSeries);
         if (getRepoData is PopularTvSeriesModel) {
-          resultTvSeries?.addAll(getRepoData.results!);
+          resultTvSeries.addAll(getRepoData.results);
           yield BlocLoadedTvSeries(resultTvSeries);
         } else
           yield BlocError(getRepoData);
-        print("getRepoData = ${getRepoData}");
-      } catch (_) {
-        yield BlocError("error Bro");
       }
     }
-  }
+  
 }

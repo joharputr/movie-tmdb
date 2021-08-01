@@ -9,6 +9,7 @@ import 'package:movie/page/homepage/bloc/homepage_bloc.dart';
 import 'package:movie/page/homepage/model/upcomming_movie_model.dart';
 import 'package:movie/page/homepage/ui/home.dart';
 import 'package:search/search_movie.dart';
+import 'package:favorite_movie/favorite_movie.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -38,9 +39,7 @@ class _HomepageState extends State<Homepage> {
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
     SearchMovie(),
-    Text(
-      'Index 2: School',
-    ),
+    FavoriteMovie()
   ];
 
   @override
