@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/page/homepage/bloc/homepage_bloc.dart';
 import 'package:movie/page/homepage/ui/homepage.dart';
 
+import 'package:favorite_movie/bloc/favorite_movie_bloc.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -20,6 +22,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(providers: [
       BlocProvider<TopMovieBloc>(create: (_) => TopMovieBloc()),
+      BlocProvider<FavoriteMovieBloc>(create: (_) =>FavoriteMovieBloc()),
       BlocProvider<TvBloc>(create: (_) => TvBloc()),
     ], child: Homepage());
     // return MaterialApp(routes: {

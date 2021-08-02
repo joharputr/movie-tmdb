@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:movie/helper/style.dart';
+import 'package:movie/local_storage/db_helper.dart';
 import 'package:movie/page/homepage/bloc/bloc_event.dart';
 import 'package:movie/page/homepage/bloc/bloc_state.dart';
 import 'package:movie/page/homepage/bloc/homepage_bloc.dart';
 import 'package:movie/page/homepage/model/popular_tv_series_model.dart';
 import 'package:movie/page/homepage/model/upcomming_movie_model.dart';
+import 'package:movie/page/homepage/ui/movie_detail.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -140,61 +142,70 @@ class _HomeState extends State<Home> {
                             .map((e) => new Padding(
                                   padding: const EdgeInsets.only(
                                       right: 16, top: 8, bottom: 8),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: 250,
-                                        width: 190,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
-                                          child: Image.network(
-                                            'https://image.tmdb.org/t/p/w500${e.posterPath}',
-                                            fit: BoxFit.cover,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MovieDetail(resultUpcomingMovie: e,)));
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 250,
+                                          width: 190,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            child: Image.network(
+                                              'https://image.tmdb.org/t/p/w500${e.posterPath}',
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2,
-                                        child: Text(
-                                          "${e.title}",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: CustomStyle()
-                                              .fontStyle
-                                              .copyWith(
-                                                  color: Colors.white,
-                                                  fontSize: 16),
+                                        SizedBox(
+                                          height: 15,
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 7,
-                                      ),
-                                      RatingBar.builder(
-                                        ignoreGestures: true,
-                                        itemSize: 20,
-                                        initialRating: e.voteAverage! / 2,
-                                        minRating: 1,
-                                        direction: Axis.horizontal,
-                                        allowHalfRating: false,
-                                        itemCount: 5,
-                                        itemPadding: EdgeInsets.symmetric(
-                                            horizontal: 2.0),
-                                        itemBuilder: (context, _) => Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          child: Text(
+                                            "${e.title}",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: CustomStyle()
+                                                .fontStyle
+                                                .copyWith(
+                                                    color: Colors.white,
+                                                    fontSize: 16),
+                                          ),
                                         ),
-                                        onRatingUpdate: (rating) {
-                                          print(rating);
-                                        },
-                                      )
-                                    ],
+                                        SizedBox(
+                                          height: 7,
+                                        ),
+                                        RatingBar.builder(
+                                          ignoreGestures: true,
+                                          itemSize: 20,
+                                          initialRating: e.voteAverage! / 2,
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: false,
+                                          itemCount: 5,
+                                          itemPadding: EdgeInsets.symmetric(
+                                              horizontal: 2.0),
+                                          itemBuilder: (context, _) => Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating) {
+                                            print(rating);
+                                          },
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ))
                             .toList(),
