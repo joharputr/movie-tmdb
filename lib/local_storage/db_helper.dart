@@ -5,9 +5,8 @@ import 'package:path/path.dart' as path;
 class DbHelper {
   static const String TABLE_NAME = "moviedb";
   static const String CREATE_TABLE =
-      " CREATE TABLE IF NOT EXISTS $TABLE_NAME ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT , image TEXT, rating INTEGER) ";
+      " CREATE TABLE IF NOT EXISTS $TABLE_NAME ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT , image TEXT, rating INTEGER, overview TEXT) ";
   static const String SELECT = "select * from $TABLE_NAME";
-
 
   static DbHelper _dbHelper = DbHelper._singleton();
 
@@ -27,7 +26,7 @@ class DbHelper {
         print("errornya ${err.toString()}");
       });
       print('TableCreated');
-    }, version: 3);
+    }, version: 1);
   }
 
   insert(String table, Map<String, dynamic> data) {
@@ -36,6 +35,11 @@ class DbHelper {
     }).catchError((err) {
       print("errorInsert $err");
     });
+  }
+
+  Future<int> delete(String table, int? id) async {
+    final db = await openDB();
+    return db.delete(table, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<List> getData(String tableName) async {

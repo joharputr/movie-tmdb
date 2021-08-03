@@ -15,7 +15,6 @@ class FavoriteMovie extends StatefulWidget {
 
 class _FavoriteMovieState extends State<FavoriteMovie> {
   List<LocalMovieModel> favoriteData = [];
-  DbHelper _dbHelper = DbHelper();
 
   @override
   void initState() {
@@ -25,13 +24,6 @@ class _FavoriteMovieState extends State<FavoriteMovie> {
 
   void initData() {
     context.read<FavoriteMovieBloc>().add(SavedMovieData());
-    _dbHelper.getData(DbHelper.TABLE_NAME).then((value) {
-      print("sdds");
-      value.forEach((element) {
-        // print('elementtt = $element');
-        //         yield FetchMovieData(data: LocalMovieModel.fromJson(element));
-      });
-    });
   }
 
   @override
@@ -47,7 +39,7 @@ class _FavoriteMovieState extends State<FavoriteMovie> {
               ),
             );
           } else if (state is FetchMovieData) {
-            print("MasukFetch = ${state.data}");
+            print("FetchDataFavorite = ${state.data}");
             state.data.forEach((element) {
               favoriteData.add(LocalMovieModel.fromJson(element));
             });
@@ -56,7 +48,7 @@ class _FavoriteMovieState extends State<FavoriteMovie> {
               child: Column(
                 children: favoriteData
                     .map((e) => Text(
-                          "sdsdsds",
+                          "${e.name}",
                           style: TextStyle(color: Colors.black),
                         ))
                     .toList(),
