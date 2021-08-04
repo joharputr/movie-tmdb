@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie/page/homepage/bloc/detail_movie_bloc.dart';
 import 'package:movie/page/homepage/bloc/homepage_bloc.dart';
 import 'package:movie/page/homepage/ui/homepage.dart';
 
@@ -22,7 +23,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(providers: [
       BlocProvider<TopMovieBloc>(create: (_) => TopMovieBloc()),
-      BlocProvider<FavoriteMovieBloc>(create: (_) =>FavoriteMovieBloc()),
+      BlocProvider<FavoriteMovieBloc>(create: (_) => FavoriteMovieBloc()),
+      BlocProvider(create: (_) => DetailMovieBloc()),
       BlocProvider<TvBloc>(create: (_) => TvBloc()),
     ], child: Homepage());
     // return MaterialApp(routes: {

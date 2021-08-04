@@ -14,7 +14,7 @@ class TopMovieBloc extends Bloc<BlocEvent, BlocState> {
   Stream<BlocState> mapEventToState(BlocEvent event) async* {
     Api api = Api();
     if (event is FetchTopMovie) {
-      yield BlocLoadingTopMovie(); //state
+  //    yield BlocLoadingTopMovie(); //state
       try {
         dynamic getRepoData = await api.getTopMovie(page: pageUpcomingMovie);
         print("getRepoo = ${getRepoData}");

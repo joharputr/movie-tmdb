@@ -40,6 +40,7 @@ class _FavoriteMovieState extends State<FavoriteMovie> {
             );
           } else if (state is FetchMovieData) {
             print("FetchDataFavorite = ${state.data}");
+            favoriteData.clear();
             state.data.forEach((element) {
               favoriteData.add(LocalMovieModel.fromJson(element));
             });
