@@ -35,7 +35,7 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     Home(),
     SearchMovie(),
     Text(
