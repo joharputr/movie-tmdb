@@ -1,10 +1,6 @@
-// To parse this JSON data, do
-//
-//     final popularTvSeriesModel = popularTvSeriesModelFromJson(jsonString);
-
 import 'dart:convert';
 
-PopularTvSeriesModel popularTvSeriesModelFromJson( str) =>
+PopularTvSeriesModel popularTvSeriesModelFromJson(str) =>
     PopularTvSeriesModel.fromJson(str);
 
 String popularTvSeriesModelToJson(PopularTvSeriesModel data) =>
@@ -12,68 +8,69 @@ String popularTvSeriesModelToJson(PopularTvSeriesModel data) =>
 
 class PopularTvSeriesModel {
   PopularTvSeriesModel({
-    this.page,
-    this.results,
-    this.totalPages,
-    this.totalResults,
+    required this.page,
+    required this.results,
+    required this.totalPages,
+    required this.totalResults,
   });
 
-  int? page;
-  List<TopTvseriesResult>? results;
-  int? totalPages;
-  int? totalResults;
+  final int page;
+  final List<TopTvResult> results;
+  final int totalPages;
+  final int totalResults;
 
   factory PopularTvSeriesModel.fromJson(Map<String, dynamic> json) =>
       PopularTvSeriesModel(
         page: json["page"],
-        results:
-            List<TopTvseriesResult>.from(json["results"].map((x) => TopTvseriesResult.fromJson(x))),
+        results: List<TopTvResult>.from(
+            json["results"].map((x) => TopTvResult.fromJson(x))),
         totalPages: json["total_pages"],
         totalResults: json["total_results"],
       );
 
   Map<String, dynamic> toJson() => {
         "page": page,
-        "results": List<dynamic>.from(results!.map((x) => x.toJson())),
+        "results": List<dynamic>.from(results.map((x) => x.toJson())),
         "total_pages": totalPages,
         "total_results": totalResults,
       };
 }
 
-class TopTvseriesResult {
-  TopTvseriesResult({
-    this.backdropPath,
-    this.firstAirDate,
-    this.genreIds,
-    this.id,
-    this.name,
-    this.originCountry,
-    this.originalLanguage,
-    this.originalName,
-    this.overview,
-    this.popularity,
-    this.posterPath,
-    this.voteAverage,
-    this.voteCount,
+class TopTvResult {
+  TopTvResult({
+     this.backdropPath,
+     this.firstAirDate,
+     this.genreIds,
+     this.id,
+     this.name,
+     this.originCountry,
+     this.originalLanguage,
+     this.originalName,
+     this.overview,
+     this.popularity,
+     this.posterPath,
+     this.voteAverage,
+     this.voteCount,
   });
 
-  String? backdropPath;
-  DateTime? firstAirDate;
-  List<int>? genreIds;
-  int? id;
-  String? name;
-  List<String>? originCountry;
-  String? originalLanguage;
-  String? originalName;
-  String? overview;
-  double? popularity;
-  String? posterPath;
-  double? voteAverage;
-  int? voteCount;
+  final String? backdropPath;
+  final String? firstAirDate;
+  final List<int>? genreIds;
+  final int? id;
+  final String? name;
+  final List<String>? originCountry;
+  final String? originalLanguage;
+  final String? originalName;
+  final String? overview;
+  final double? popularity;
+  final String? posterPath;
+  final double? voteAverage;
+  final int? voteCount;
 
-  factory TopTvseriesResult.fromJson(Map<String, dynamic> json) => TopTvseriesResult(
-        backdropPath: json["backdrop_path"],
-        firstAirDate: DateTime.parse(json["first_air_date"]),
+  factory TopTvResult.fromJson(Map<String, dynamic> json) => TopTvResult(
+        backdropPath:
+            json["backdrop_path"] == null ? "" : json["backdrop_path"],
+        firstAirDate: json["first_air_date"],
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
         name: json["name"],
@@ -89,9 +86,8 @@ class TopTvseriesResult {
 
   Map<String, dynamic> toJson() => {
         "backdrop_path": backdropPath,
-        "first_air_date":
-            "${firstAirDate?.year.toString().padLeft(4, '0')}-${firstAirDate?.month.toString().padLeft(2, '0')}-${firstAirDate?.day.toString().padLeft(2, '0')}",
-        "genre_ids": List<dynamic>.from(genreIds!.map((x) => x)),
+        "first_air_date": firstAirDate,
+        "genre_ids": List<int>.from(genreIds!.map((x) => x)),
         "id": id,
         "name": name,
         "origin_country": List<dynamic>.from(originCountry!.map((x) => x)),

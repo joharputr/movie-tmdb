@@ -6,4 +6,4 @@ class FetchTopMovieLoadMore extends BlocEvent {}
 
 class FetchPopularTvSeries extends BlocEvent {}
 
-class FetchPopularTvSeriesLoadMore extends BlocEvent {}
+class FetchDetailMovie extends BlocEvent{}

@@ -23,8 +23,8 @@ class UpCommingMovie {
 
   factory UpCommingMovie.fromJson(Map<String, dynamic> json) => UpCommingMovie(
         page: json["page"],
-        results:
-            List<ResultUpcomingMovie>.from(json["results"].map((x) => ResultUpcomingMovie.fromJson(x))),
+        results: List<ResultUpcomingMovie>.from(
+            json["results"].map((x) => ResultUpcomingMovie.fromJson(x))),
         totalPages: json["total_pages"],
         totalResults: json["total_results"],
       );
@@ -70,7 +70,8 @@ class ResultUpcomingMovie {
   double? voteAverage;
   int? voteCount;
 
-  factory ResultUpcomingMovie.fromJson(Map<String, dynamic> json) => ResultUpcomingMovie(
+  factory ResultUpcomingMovie.fromJson(Map<String, dynamic> json) =>
+      ResultUpcomingMovie(
         adult: json["adult"],
         backdropPath: json["backdrop_path"],
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
@@ -104,4 +105,7 @@ class ResultUpcomingMovie {
         "vote_average": voteAverage,
         "vote_count": voteCount,
       };
+
+
+
 }
