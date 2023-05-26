@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:movie/helper/style.dart';
-import 'package:movie/local_storage/db_helper.dart';
 import 'package:movie/page/homepage/bloc/bloc_event.dart';
 import 'package:movie/page/homepage/bloc/bloc_state.dart';
 import 'package:movie/page/homepage/bloc/homepage_bloc.dart';
@@ -373,14 +372,14 @@ class _HomeState extends State<Home> {
                                               .width /
                                               1.6,
                                           child: Text(
-                                            "${Jiffy(resultTvSeries[index].firstAirDate).yMMMMd},",
+                                            "${Jiffy.parse(resultTvSeries[index].firstAirDate.toString()).yMMMMd},",
                                             style: CustomStyle()
                                                 .fontStyle
                                                 .copyWith(
-                                                color: Color(0xff696D74),
-                                                fontSize: 15,
-                                                fontWeight:
-                                                FontWeight.bold),
+                                                    color: Color(0xff696D74),
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                           ),
                                         ),
                                       ],

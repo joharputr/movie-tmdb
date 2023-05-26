@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   movie:
-    path: ../../../movie-tmdb
+    path: ../../../movie
 
 
 
