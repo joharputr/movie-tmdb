@@ -1,15 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:favorite_movie/view/favorite_movie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie/page/homepage/bloc/bloc_event.dart';
-import 'package:movie/page/homepage/bloc/bloc_state.dart';
 import 'package:movie/page/homepage/bloc/homepage_bloc.dart';
-import 'package:movie/page/homepage/model/upcomming_movie_model.dart';
 import 'package:movie/page/homepage/ui/home.dart';
-import 'package:search/search_movie.dart';
-import 'package:favorite_movie/view/favorite_movie.dart';
+import 'package:search/ui/search_movie.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);

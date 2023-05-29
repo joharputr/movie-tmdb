@@ -32,4 +32,17 @@ class Api {
       return e.message;
     }
   }
+
+  Future<dynamic> searchMovie({required String text}) async {
+    try {
+      final url =
+          "3/search/movie?api_key=9b3efc88fed3cb0e25a0849788f05166&query=$text&include_adult=false&language=en-US&page=1";
+      final response = await dio.get(url);
+      print("popularMovie = ${response.data}");
+      return popularTvSeriesModelFromJson(response.data);
+    } on DioError catch (e) {
+      print("error = ${e.toString()}");
+      return e.message;
+    }
+  }
 }

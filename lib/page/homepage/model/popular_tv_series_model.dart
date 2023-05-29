@@ -38,27 +38,29 @@ class PopularTvSeriesModel {
 
 class TopTvResult {
   TopTvResult({
-     this.backdropPath,
-     this.firstAirDate,
-     this.genreIds,
-     this.id,
-     this.name,
-     this.originCountry,
-     this.originalLanguage,
-     this.originalName,
-     this.overview,
-     this.popularity,
-     this.posterPath,
-     this.voteAverage,
-     this.voteCount,
+    this.backdropPath,
+    this.original_title,
+    this.firstAirDate,
+    this.genreIds,
+    this.id,
+    this.name,
+    this.originCountry,
+    this.originalLanguage,
+    this.originalName,
+    this.overview,
+    this.popularity,
+    this.posterPath,
+    this.voteAverage,
+    this.voteCount,
   });
 
   final String? backdropPath;
+  final String? original_title;
   final String? firstAirDate;
   final List<int>? genreIds;
   final int? id;
   final String? name;
-  final List<String>? originCountry;
+  final dynamic originCountry;
   final String? originalLanguage;
   final String? originalName;
   final String? overview;
@@ -74,7 +76,9 @@ class TopTvResult {
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
         name: json["name"],
-        originCountry: List<String>.from(json["origin_country"].map((x) => x)),
+        originCountry: json["origin_country"] == null
+            ? ""
+            : List<String>.from(json["origin_country"].map((x) => x)),
         originalLanguage: json["original_language"],
         originalName: json["original_name"],
         overview: json["overview"],
@@ -84,8 +88,10 @@ class TopTvResult {
         voteCount: json["vote_count"],
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "backdrop_path": backdropPath,
+        "original_title": original_title,
         "first_air_date": firstAirDate,
         "genre_ids": List<int>.from(genreIds!.map((x) => x)),
         "id": id,

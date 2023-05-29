@@ -10,6 +10,7 @@ class DioHandler {
       receiveTimeout: const Duration(seconds: 30),
     );
     Dio dio = Dio(dioOptions);
+    dio.interceptors.add(LogInterceptor(responseBody: true));
     return dio;
   }
 }
