@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 
 abstract class BlocState {}
 
-class BlocEmpty extends BlocState {}
+class BlocEmpty extends BlocState {
+
+}
 
 class BlocError extends BlocState {
   final String error;

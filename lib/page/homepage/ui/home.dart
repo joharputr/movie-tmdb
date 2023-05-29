@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:movie/di/dependency.dart';
 import 'package:movie/helper/style.dart';
 import 'package:movie/page/homepage/bloc/bloc_event.dart';
 import 'package:movie/page/homepage/bloc/bloc_state.dart';
@@ -143,11 +144,13 @@ class _HomeState extends State<Home> {
                               right: 16, top: 8, bottom: 8),
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          MovieDetail(resultUpcomingMovie: e,)));
-                            },
+                              Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => MovieDetail(
+                                                    resultUpcomingMovie: e,
+                                                    dbHelper: locator(),
+                                                  )));
+                                    },
                             child: Column(
                               crossAxisAlignment:
                               CrossAxisAlignment.start,

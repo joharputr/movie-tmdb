@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie/di/dependency.dart';
 import 'package:movie/page/homepage/api.dart';
 import 'package:movie/page/homepage/bloc/bloc_event.dart';
 import 'package:movie/page/homepage/bloc/bloc_state.dart';
@@ -6,15 +7,16 @@ import 'package:movie/page/homepage/model/popular_tv_series_model.dart';
 import 'package:movie/page/homepage/model/upcomming_movie_model.dart';
 
 class TopMovieBloc extends Bloc<BlocEvent, BlocState> {
-  TopMovieBloc() : super(BlocLoadingTopMovie());
+  Api api = Api(dio: locator());
+  TopMovieBloc({required this.api}) : super(BlocLoadingTopMovie());
+
   int pageUpcomingMovie = 1;
   List<ResultUpcomingMovie>? resultUpcomingMovie = [];
 
   @override
   Stream<BlocState> mapEventToState(BlocEvent event) async* {
-    Api api = Api();
     if (event is FetchTopMovie) {
-  //    yield BlocLoadingTopMovie(); //state
+      //    yield BlocLoadingTopMovie(); //state
       try {
         dynamic getRepoData = await api.getTopMovie(page: pageUpcomingMovie);
         print("getRepoo = ${getRepoData}");
@@ -47,8 +49,9 @@ class TopMovieBloc extends Bloc<BlocEvent, BlocState> {
 }
 
 class TvBloc extends Bloc<BlocEvent, BlocState> {
-  TvBloc() : super(BlocLoadingTvSeries());
-  Api api = Api();
+  Api api = Api(dio: locator());
+
+  TvBloc({required this.api}) : super(BlocLoadingTvSeries());
   int pageTvSeries = 1;
   List<TopTvResult> resultTvSeries = [];
 
@@ -57,13 +60,13 @@ class TvBloc extends Bloc<BlocEvent, BlocState> {
     if (event is FetchPopularTvSeries) {
       yield BlocLoadingTvSeries(); //state
 
-        dynamic getRepoData = await api.getPopularTvSeries(page: pageTvSeries);
-        if (getRepoData is PopularTvSeriesModel) {
-          resultTvSeries.addAll(getRepoData.results);
-          yield BlocLoadedTvSeries(resultTvSeries);
-        } else
-          yield BlocError(getRepoData);
-      }
+      dynamic getRepoData = await api.getPopularTvSeries(page: pageTvSeries);
+      if (getRepoData is PopularTvSeriesModel) {
+        resultTvSeries.addAll(getRepoData.results);
+        yield BlocLoadedTvSeries(resultTvSeries);
+      } else
+        yield BlocError(getRepoData);
     }
-  
+  }
+
 }

@@ -10,16 +10,16 @@ import 'package:movie/page/homepage/bloc/detail_movie_bloc.dart';
 import 'package:movie/page/homepage/model/upcomming_movie_model.dart';
 
 class MovieDetail extends StatefulWidget {
+  final DbHelper dbHelper;
   final ResultUpcomingMovie? resultUpcomingMovie;
 
-  MovieDetail({this.resultUpcomingMovie});
+  MovieDetail({required this.dbHelper, this.resultUpcomingMovie});
 
   @override
   _MovieDetailState createState() => _MovieDetailState();
 }
 
 class _MovieDetailState extends State<MovieDetail> {
-  final DbHelper _helper = new DbHelper();
   LocalMovieModel localMovieModel = LocalMovieModel();
   ResultUpcomingMovie? tempData;
   List<LocalMovieModel> favData = [];
@@ -104,7 +104,9 @@ class _MovieDetailState extends State<MovieDetail> {
                         onTap: () {
                           if (isFavorite!) {
                             print("fav to not fav");
-                            _helper
+                            this
+                                .widget
+                                .dbHelper
                                 .delete(DbHelper.TABLE_NAME, tempData?.id)
                                 .then((value) {
                               favData.removeWhere(
@@ -113,17 +115,17 @@ class _MovieDetailState extends State<MovieDetail> {
                             });
                           } else {
                             print("not fav to fav");
-                            _helper.insert(
-                              DbHelper.TABLE_NAME,
-                              localMovieModel.toMap(
-                                  id: tempData?.id,
-                                  rating:
-                                      ((tempData!.voteAverage)! ~/ 2).toInt(),
-                                  name: tempData?.title,
-                                  image:
-                                      'https://image.tmdb.org/t/p/w500${tempData?.posterPath}',
-                                  overview: tempData?.overview),
-                            );
+                            this.widget.dbHelper.insert(
+                                  DbHelper.TABLE_NAME,
+                                  localMovieModel.toMap(
+                                      id: tempData?.id,
+                                      rating: ((tempData!.voteAverage)! ~/ 2)
+                                          .toInt(),
+                                      name: tempData?.title,
+                                      image:
+                                          'https://image.tmdb.org/t/p/w500${tempData?.posterPath}',
+                                      overview: tempData?.overview),
+                                );
                           }
                           context
                               .read<DetailMovieBloc>()
