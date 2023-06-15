@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:jiffy/jiffy.dart';
@@ -19,10 +20,34 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String randomName = "";
+
+  static const platform = MethodChannel('android/channel');
+
+  _generateRandomNumber() async {
+    String random;
+    try {
+      random = await platform.invokeMethod('getName');
+      print("random = ${random.toString()}");
+      randomName = random;
+      setState(() {
+
+      });
+    } on PlatformException catch (e) {
+      random = "";
+    }
+  }
+
   List<ResultUpcomingMovie>? resultUpcomingMovie = [];
   List<TopTvResult> resultTvSeries = [];
 
   ScrollController? _controller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _generateRandomNumber();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +94,11 @@ class _HomeState extends State<Home> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "Avenger",
+                            randomName,
                             style: CustomStyle()
                                 .fontStyle
                                 .copyWith(color: Colors.white, fontSize: 15),
-                          ),
+                          )
                         ],
                       )
                     ],
@@ -135,7 +160,7 @@ class _HomeState extends State<Home> {
                         Row(
                           children: resultUpcomingMovie!
                               .map((e) => new Padding(
-                                    padding: const EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                         right: 16, top: 8, bottom: 8),
                                     child: GestureDetector(
                                       onTap: () {

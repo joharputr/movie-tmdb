@@ -96,6 +96,9 @@ class _HomepageState extends State<Homepage> {
               currentIndex: _selectedIndex,
               onTap: _onItemTapped,
             ),
-            body: _widgetOptions.elementAt(_selectedIndex)));
+            body: IndexedStack(
+              children: _widgetOptions,
+              index: _selectedIndex,
+            )));
   }
 }
